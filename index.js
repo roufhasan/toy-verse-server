@@ -29,10 +29,14 @@ async function run() {
     const db = client.db("toyVerse");
     const toysCollection = db.collection("toys");
 
+    app.get("/allToys", async (req, res) => {
+      const result = await toysCollection.find({}).toArray();
+      res.send(result);
+    });
+
     app.post("/addToy", async (req, res) => {
       const body = req.body;
       const result = await toysCollection.insertOne(body);
-      console.log(body);
       res.send(result);
     });
 
