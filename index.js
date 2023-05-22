@@ -34,6 +34,16 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/allToys/:category", async (req, res) => {
+      const category = req.params.category;
+      if (category == "marvel" || category == "dc" || category == "anime") {
+        const result = await toysCollection
+          .find({ subCategory: category })
+          .toArray();
+        return res.send(result);
+      }
+    });
+
     app.get("/toy/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
@@ -42,7 +52,6 @@ async function run() {
     });
 
     app.get("/myToys", async (req, res) => {
-      console.log(req.query.email);
       let query = {};
       if (req.query?.email) {
         query = { email: req.query.email };
