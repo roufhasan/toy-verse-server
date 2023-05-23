@@ -39,6 +39,7 @@ async function run() {
       if (category == "marvel" || category == "dc" || category == "anime") {
         const result = await toysCollection
           .find({ subCategory: category })
+          .limit(2)
           .toArray();
         return res.send(result);
       }
